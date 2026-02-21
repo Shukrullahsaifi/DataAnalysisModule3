@@ -20,7 +20,6 @@ GROUP BY order_id;
 
 -- Q3) How many orders were placed per day (all statuses)?
 -- Return (order_date, orders_count) from orders.
--- Note: DATE() extracts just the YYYY-MM-DD from a datetime.
 SELECT DATE(order_datetime) AS order_date, COUNT(order_id) AS orders_count
 FROM orders
 GROUP BY order_date;
@@ -78,14 +77,12 @@ GROUP BY store_id, payment_method;
 
 -- Q11) Among PAID orders, what percent used 'app' as the payment_method?
 -- Return a single row with pct_app_paid_orders (0–100).
--- Note: We use 100.0 to ensure the division results in a decimal/float.
 SELECT 
     (COUNT(CASE WHEN payment_method = 'app' THEN 1 END) * 100.0 / COUNT(*)) AS pct_app_paid_orders
 FROM orders
 WHERE status = 'paid';
 
 -- Q12) Busiest hour: for PAID orders, show (hour_of_day, orders_count) sorted desc.
--- Note: HOUR() extracts the 0-23 value from the datetime.
 SELECT 
     HOUR(order_datetime) AS hour_of_day, 
     COUNT(*) AS orders_count
